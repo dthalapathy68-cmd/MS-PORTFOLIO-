@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Portfolio Web</title>
+
+<!-- GOOGLE FONTS -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- FONT AWESOME -->
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<!-- THREE JS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:#050505;
+    color:white;
+    overflow-x:hidden;
+
+    font-family:'Outfit',sans-serif;
+
+    cursor:none;
+
+}
+
+/* ===========================
+   PREMIUM CURSOR
+=========================== */
+
+.cursor{
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    position:fixed;
+
+    pointer-events:none;
+
+    z-index:99999;
+
+    transform:translate(-50%,-50%);
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(245,208,97,.35),
+    rgba(245,208,97,.05));
+
+    border:1px solid rgba(255,255,255,.2);
+
+    backdrop-filter:blur(8px);
+
+    transition:
+    width .25s ease,
+    height .25s ease,
+    transform .1s ease;
+
+    box-shadow:
+    0 0 25px rgba(245,208,97,.3);
+
+}
+
+.cursor-dot{
+
+    width:8px;
+    height:8px;
+
+    background:#f5d061;
+
+    border-radius:50%;
+
+    position:fixed;
+
+    pointer-events:none;
+
+    z-index:99999;
+
+    transform:translate(-50%,-50%);
+
+    box-shadow:
+    0 0 20px #f5d061;
+
+}
+
+/* ===========================
+   BACKGROUND
+=========================== */
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-5;
+}
+
+.bg-blur1{
+
+    position:fixed;
+
+    width:800px;
+    height:800px;
+
+    background:
+    radial-gradient(
+    circle,
+    #4f46e5 0%,
+    transparent 70%);
+
+    filter:blur(140px);
+
+    opacity:.18;
+
+    top:-200px;
+    left:-200px;
+
+    animation:move1 20s ease infinite alternate;
+
+}
+
+.bg-blur2{
+
+    position:fixed;
+
+    width:700px;
+    height:700px;
+
+    background:
+    radial-gradient(
+    circle,
+    #d4a017 0%,
+    transparent 70%);
+
+    filter:blur(140px);
+
+    opacity:.12;
+
+    bottom:-200px;
+    right:-200px;
+
+    animation:move2 20s ease infinite alternate;
+
+}
+
+@keyframes move1{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(100px,80px);
+    }
+
+}
+
+@keyframes move2{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(-100px,-80px);
+    }
+
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+
+nav{
+
+    width:100%;
+
+    position:fixed;
+
+    top:0;
+
+    z-index:1000;
+
+    padding:25px 8%;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    backdrop-filter:blur(18px);
+
+    background:
+    rgba(255,255,255,.03);
+
+    border-bottom:
+    1px solid rgba(255,255,255,.05);
+
+}
+
+.logo{
+
+    font-family:'Cinzel',serif;
+
+    font-size:2rem;
+
+    color:#f5d061;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+}
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:40px;
+
+}
+
+nav ul li a{
+
+    text-decoration:none;
+
+    color:#ddd;
+
+    transition:.3s;
+
+    font-size:.95rem;
+
+    letter-spacing:1px;
+
+}
+
+nav ul li a:hover{
+
+    color:#f5d061;
+
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.hero{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:120px 8%;
+
+    position:relative;
+
+}
+
+.hero-container{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    text-align:center;
+
+    position:relative;
+
+}
+
+/* ===========================
+   IMAGE
+=========================== */
+
+.image-wrapper{
+
+    width:320px;
+    height:420px;
+
+    border-radius:40px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    animation:float 5s ease-in-out infinite;
+
+    transform-style:preserve-3d;
+
+    box-shadow:
+    0 0 40px rgba(245,208,97,.2),
+    0 0 120px rgba(79,70,229,.25);
+
+}
+
+.image-wrapper::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-3px;
+
+    background:
+    linear-gradient(
+    45deg,
+    #f5d061,
+    #ffffff,
+    #4f46e5,
+    #f5d061);
+
+    z-index:-1;
+
+    filter:blur(20px);
+
+}
+
+.image-wrapper::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:90%;
+
+    height:35px;
+
+    background:
+    radial-gradient(
+    ellipse,
+    rgba(245,208,97,.35),
+    transparent);
+
+    bottom:-20px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    filter:blur(18px);
+
+}
+
+.image-wrapper img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+/* ===========================
+   HERO TEXT
+=========================== */
+
+.hero h1{
+
+    margin-top:45px;
+
+    font-size:5.8rem;
+
+    line-height:1.1;
+
+    font-family:'Cinzel',serif;
+
+    text-transform:uppercase;
+
+    letter-spacing:8px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #f5d061 40%,
+    #ffffff 80%);
+
+    background-clip:text;
+    -webkit-background-clip:text;
+    color:transparent;
+    
+    text-shadow:
+    0 0 25px rgba(245,208,97,.25);
+
+}
+
+.hero h2{
+
+    margin-top:20px;
+
+    font-weight:400;
+
+    color:#bdbdbd;
+
+    letter-spacing:3px;
+
+    font-size:1.2rem;
+
+}
+
+.bio{
+
+    max-width:800px;
+
+    margin-top:30px;
+
+    color:#a1a1aa;
+
+    line-height:2;
+
+    font-size:1.05rem;
+
+}
+
+/* ===========================
+   LIKE BUTTON
+=========================== */
+
+.like-section{
+
+    margin-top:45px;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.like-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:18px 35px;
+
+    border:none;
+
+    border-radius:60px;
+
+    cursor:pointer;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    color:white;
+
+    background:
+    rgba(255,255,255,.06);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+
+    transition:.4s;
+
+    box-shadow:
+    0 0 25px rgba(245,208,97,.12);
+
+}
+
+.like-btn i{
+
+    color:#f5d061;
+
+    font-size:1.2rem;
+
+}
+
+.like-btn:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.03);
+
+    box-shadow:
+    0 0 35px rgba(245,208,97,.25);
+
+}
+
+.like-btn.liked{
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(245,208,97,.18),
+    rgba(255,255,255,.08));
+
+    box-shadow:
+    0 0 40px rgba(245,208,97,.35);
+
+}
+
+/* ===========================
+   LUXURY LINE
+=========================== */
+
+.line{
+
+    width:200px;
+
+    height:2px;
+
+    background:
+    linear-gradient(
+    to right,
+    transparent,
+    #f5d061,
+    transparent);
+
+    margin:40px auto;
+
+}
+
+/* ===========================
+   SECTION
+=========================== */
+
+section{
+
+    padding:120px 8%;
+
+    position:relative;
+
+}
+
+.section-title{
+
+    font-size:3rem;
+
+    font-family:'Cinzel',serif;
+
+    color:#f5d061;
+
+    text-align:center;
+
+    margin-bottom:80px;
+
+    letter-spacing:4px;
+
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:35px;
+
+}
+
+/* ===========================
+   VIDEO SECTION
+=========================== */
+
+.video-container{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:40px;
+
+}
+
+.video-card{
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(20px);
+
+    transition:.5s;
+
+    position:relative;
+
+}
+
+.video-card:hover{
+
+    transform:
+    translateY(-12px)
+    scale(1.02);
+
+    box-shadow:
+    0 0 40px rgba(245,208,97,.18);
+
+}
+
+.video-card video{
+
+    width:100%;
+
+    height:230px;
+
+    object-fit:cover;
+
+    border-bottom:
+    1px solid rgba(255,255,255,.06);
+
+}
+
+.video-card h3{
+
+    padding:25px 25px 10px;
+
+    font-size:1.5rem;
+
+    color:#f5d061;
+
+    font-family:'Cinzel',serif;
+
+}
+
+.video-card p{
+
+    padding:0 25px 30px;
+
+    color:#bdbdbd;
+
+    line-height:1.8;
+
+}
+
+/* ===========================
+   SERVICES
+=========================== */
+
+.services-container{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+    gap:35px;
+
+}
+
+.service-card{
+
+    position:relative;
+
+    padding:45px 35px;
+
+    border-radius:30px;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+
+    overflow:hidden;
+
+    transition:.5s;
+
+}
+
+.service-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(245,208,97,.08),
+    transparent);
+
+    opacity:0;
+
+    transition:.5s;
+
+}
+
+.service-card:hover::before{
+
+    opacity:1;
+
+}
+
+.service-card:hover{
+
+    transform:
+    translateY(-15px);
+
+    box-shadow:
+    0 0 40px rgba(245,208,97,.18);
+
+}
+
+.service-icon{
+
+    width:80px;
+    height:80px;
+
+    border-radius:20px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    font-size:2rem;
+
+    color:#f5d061;
+
+    background:
+    rgba(255,255,255,.05);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    margin-bottom:30px;
+
+    box-shadow:
+    0 0 25px rgba(245,208,97,.12);
+
+}
+
+.service-card h3{
+
+    font-size:1.6rem;
+
+    margin-bottom:20px;
+
+    color:#ffffff;
+
+    font-family:'Cinzel',serif;
+
+}
+
+.service-card p{
+
+    color:#bdbdbd;
+
+    line-height:1.9;
+
+}
+
+.card{
+
+    padding:40px;
+
+    border-radius:30px;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.06);
+
+    backdrop-filter:blur(20px);
+
+    transition:.5s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:200%;
+    height:200%;
+
+    background:
+    linear-gradient(
+    transparent,
+    rgba(255,255,255,.08),
+    transparent);
+
+    transform:rotate(45deg);
+
+    top:-120%;
+    left:-120%;
+
+    transition:.8s;
+
+}
+
+.card:hover::before{
+
+    top:120%;
+    left:120%;
+
+}
+
+.card:hover{
+
+    transform:
+    translateY(-15px)
+    rotateX(5deg);
+
+    box-shadow:
+    0 0 35px rgba(245,208,97,.15);
+
+}
+
+.card h3{
+
+    font-size:1.5rem;
+
+    margin-bottom:20px;
+
+    color:#f5d061;
+
+}
+
+.card p{
+
+    color:#bdbdbd;
+
+    line-height:1.8;
+
+}
+
+/* ===========================
+   SOCIALS
+=========================== */
+
+.socials{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:35px;
+
+    margin-top:50px;
+
+    flex-wrap:wrap;
+
+}
+
+.socials a{
+
+    width:75px;
+    height:75px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-size:1.5rem;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    transition:.4s;
+
+}
+
+.socials a:hover{
+
+    transform:
+    translateY(-10px)
+    scale(1.08);
+
+    color:#f5d061;
+
+    box-shadow:
+    0 0 25px rgba(245,208,97,.4);
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+footer{
+
+    padding:50px;
+
+    text-align:center;
+
+    color:#777;
+
+    border-top:
+    1px solid rgba(255,255,255,.05);
+
+}
+
+/* ===========================
+   FLOAT
+=========================== */
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-20px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* ===========================
+   FADE
+=========================== */
+
+.fade{
+
+    opacity:0;
+
+    transform:translateY(50px);
+
+    transition:1s;
+
+}
+
+.fade.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:900px){
+
+    .hero h1{
+        font-size:3rem;
+    }
+
+    nav ul{
+        gap:18px;
+    }
+
+    .image-wrapper{
+        width:260px;
+        height:340px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- CURSOR -->
+
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
+<!-- BACKGROUND -->
+
+<div class="bg-blur1"></div>
+<div class="bg-blur2"></div>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+Portfolio Web
+</div>
+
+<ul>
+
+<li><a href="#about">About</a></li>
+<li><a href="#works">Works</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#social">Social</a></li>
+
+</ul>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-container">
+
+<div class="image-wrapper">
+
+<img src="/img/1759498861194.jpg" alt="profile">
+
+</div>
+
+<h1>
+MUTHU SUTHISH N
+</h1>
+
+<h2>
+CREATIVE DEVELOPER • WEBSITE DESIGNER • VIBE CODER • STORY WRITER
+</h2>
+
+<div class="line"></div>
+
+<p class="bio">
+
+IM SUTHISH N HERE! IM A VIBE CODER WHO CREATES VISUAL WEBSITES,
+LANDING PAGES AND CINEMATIC DIGITAL EXPERIENCES.
+
+</p>
+
+<!-- LIKE BUTTON -->
+
+<div class="like-section">
+
+    <button class="like-btn" id="likeBtn">
+
+        <i class="fa-solid fa-heart"></i>
+
+        <span id="likeCount">0</span>
+
+    </button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about" class="fade">
+
+<h2 class="section-title">
+About
+</h2>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>
+Vision
+</h3>
+
+<p>
+My vision is to create elite royal websites and luxury landing pages with cinematic visuals.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Languages
+</h3>
+
+<p>
+Tamil • English • Basic Hindi • Telugu • Malayalam
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Currently
+</h3>
+
+<p>
+Currently focusing on creating more cinematic websites and improving creative web skills.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- WORKS -->
+
+<section id="works" class="fade">
+
+<h2 class="section-title">
+Featured Works
+</h2>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>
+Royal Magenta
+</h3>
+
+<p>
+Elite cinematic cafe website with luxury visuals and immersive design.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Aurelia
+</h3>
+
+<p>
+Premium jewellery website with modern luxury aesthetics.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Portfolio Web
+</h3>
+
+<p>
+My own futuristic cinematic luxury portfolio experience.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PROJECT VIDEOS -->
+
+<section id="videos" class="fade">
+
+<h2 class="section-title">
+Project Showcase
+</h2>
+
+<div class="video-container">
+
+    <!-- VIDEO 1 -->
+
+    <div class="video-card">
+
+        <video controls autoplay muted loop playsinline>
+            <source src="/vid/royal magenta.mp4" type="video/mp4">
+        </video>
+
+        <h3>Royal Magenta</h3>
+
+        <p>
+        Elite cinematic cafe landing page with luxury animations.
+        </p>
+
+    </div>
+
+    <!-- VIDEO 2 -->
+
+    <div class="video-card">
+
+        <video controls muted loop playsinline>
+            <source src="/vid/aurelia.mp4" type="video/mp4">
+        </video>
+
+        <h3>Aurelia Jewellery</h3>
+
+        <p>
+        Premium jewellery website with cinematic luxury aesthetics.
+        </p>
+
+    </div>
+
+    <!-- VIDEO 3 -->
+
+    <div class="video-card">
+
+        <video controls muted loop playsinline>
+            <source src="/vid/portfolio.mp4" type="video/mp4">
+        </video>
+
+        <h3>Portfolio Web</h3>
+
+        <p>
+        Futuristic premium personal portfolio experience.
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+<!-- SKILLS -->
+
+<section id="skills" class="fade">
+
+<h2 class="section-title">
+Skills
+</h2>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>
+Technical
+</h3>
+
+<p>
+HTML • CSS • C • Python • Java Basics
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Creative
+</h3>
+
+<p>
+Editing • Story Writing • Visual Direction
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Beyond Coding
+</h3>
+
+<p>
+Leadership • Creative Thinking • Unique Ideas • Chill Personality
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- SERVICES -->
+
+<section id="services" class="fade">
+
+<h2 class="section-title">
+Services
+</h2>
+
+<div class="services-container">
+
+    <!-- SERVICE 1 -->
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            <i class="fa-solid fa-code"></i>
+        </div>
+
+        <h3>
+        Website Development
+        </h3>
+
+        <p>
+
+        I create modern cinematic websites,
+        responsive landing pages, luxury business websites,
+        and futuristic UI experiences. 
+
+        </p>
+
+    </div>
+
+    <!-- SERVICE 2 -->
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+
+        <h3>
+        Luxury UI/UX Design
+        </h3>
+
+        <p>
+
+        Premium elite user interfaces with smooth animations,
+        immersive visuals, and luxury modern aesthetics.
+
+        </p>
+
+    </div>
+
+    <!-- SERVICE 3 -->
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            <i class="fa-solid fa-film"></i>
+        </div>
+
+        <h3>
+        Cinematic Visual Design
+        </h3>
+
+        <p>
+
+        Cinematic website visuals, glowing effects,
+        modern layouts, and high-end futuristic web experiences.
+
+        </p>
+
+    </div>
+
+    <!-- SERVICE 4 -->
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+        </div>
+
+        <h3>
+        Responsive Websites
+        </h3>
+
+        <p>
+
+        Fully responsive websites optimized for mobile,
+        tablet, laptop, and modern screens.
+
+        </p>
+
+    </div>
+
+    <!--service 5-->
+
+    <div class="service-card">
+
+        <div class="service-icon">
+            <i class="fa-solid fa-laptop-code"></i>
+        </div>
+
+        <h3>
+        SERVICES FOR
+        </h3>
+
+        <p>
+        Small Business, portfolio creating, personal website,
+        startups, local business.
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- SOCIAL -->
+
+<section id="social" class="fade">
+
+<h2 class="section-title">
+Connect
+</h2>
+
+<div class="socials">
+
+<a href="https://www.instagram.com/suthish.official7?igsh=MW1jN2lnd2Y4bjdydA==">
+<i class="fab fa-instagram"></i>
+</a>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+Portfolio Web © 2026
+
+</footer>
+
+<script>
+
+/* ===========================
+   CURSOR
+=========================== */
+
+const cursor = document.querySelector(".cursor");
+const dot = document.querySelector(".cursor-dot");
+
+document.addEventListener("mousemove",(e)=>{
+
+cursor.style.left = e.clientX + "px";
+cursor.style.top = e.clientY + "px";
+
+dot.style.left = e.clientX + "px";
+dot.style.top = e.clientY + "px";
+
+});
+
+/* ===========================
+   CURSOR HOVER
+=========================== */
+
+document.querySelectorAll("a,.card").forEach(el=>{
+
+el.addEventListener("mouseenter",()=>{
+
+cursor.style.width = "75px";
+cursor.style.height = "75px";
+
+});
+
+el.addEventListener("mouseleave",()=>{
+
+cursor.style.width = "45px";
+cursor.style.height = "45px";
+
+});
+
+});
+
+/* ===========================
+   FADE ANIMATION
+=========================== */
+
+const observer =
+new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+});
+
+});
+
+document.querySelectorAll(".fade")
+.forEach(el=>observer.observe(el));
+
+/* ===========================
+   IMAGE PARALLAX
+=========================== */
+
+document.addEventListener("mousemove",(e)=>{
+
+const x =
+(window.innerWidth/2 - e.pageX)/40;
+
+const y =
+(window.innerHeight/2 - e.pageY)/40;
+
+document.querySelector(".image-wrapper")
+.style.transform =
+
+`rotateY(${x}deg)
+ rotateX(${-y}deg)`;
+
+});
+
+/* ===========================
+   LIKE BUTTON
+=========================== */
+
+const likeBtn =
+document.getElementById("likeBtn");
+
+const likeCount =
+document.getElementById("likeCount");
+
+/* GET SAVED COUNT */
+
+let likecount =
+parseInt(localStorage.getItem("portfolioLikes")) || 0;
+
+/* SHOW COUNT */
+
+likeCount.innerText = likecount;
+
+/* CLICK EVENT */
+
+likeBtn.addEventListener("click",()=>{
+
+    /* CHECK IF ALREADY LIKED */
+
+    if(localStorage.getItem("liked") !== "true"){
+
+        likecount++;
+
+        likeCount.innerText = likecount;
+
+        /* SAVE */
+
+        localStorage.setItem(
+        "portfolioLikes",
+        likecount
+        );
+
+        localStorage.setItem(
+        "liked",
+        "true"
+        );
+
+        /* BUTTON EFFECT */
+
+        likeBtn.classList.add("liked");
+
+    }
+
+});
+
+/* ===========================
+   THREE JS
+=========================== */
+
+const scene = new THREE.Scene();
+
+const camera =
+new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+const renderer =
+new THREE.WebGLRenderer({
+alpha:true
+});
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+document.body.appendChild(
+renderer.domElement
+);
+
+const geometry =
+new THREE.BufferGeometry();
+
+const count = 1200;
+
+const positions =
+new Float32Array(count * 3);
+
+for(let i=0;i<count*3;i++){
+
+positions[i] =
+(Math.random()-0.5)*10;
+
+}
+
+geometry.setAttribute(
+'position',
+new THREE.BufferAttribute(
+positions,3
+)
+);
+
+const material =
+new THREE.PointsMaterial({
+
+size:0.015,
+color:"#f5d061"
+
+});
+
+const particles =
+new THREE.Points(
+geometry,
+material
+);
+
+scene.add(particles);
+
+camera.position.z = 3;
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+particles.rotation.y += 0.00015;
+particles.rotation.x += 0.00008;
+
+renderer.render(scene,camera);
+
+}
+
+animate();
+
+/* ===========================
+   RESIZE
+=========================== */
+
+window.addEventListener(
+"resize",()=>{
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+camera.aspect =
+window.innerWidth/window.innerHeight;
+
+camera.updateProjectionMatrix();
+
+});
+
+</script>
+
+</body>
+</html>
