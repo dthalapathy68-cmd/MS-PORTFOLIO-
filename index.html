@@ -270,7 +270,70 @@ nav ul li a:hover{
     color:#f5d061;
 
 }
+/* ===========================
+   MOBILE MENU
+=========================== */
 
+.menu-btn{
+
+    display:none;
+
+    font-size:1.8rem;
+
+    color:#f5d061;
+
+    cursor:pointer;
+
+}
+
+/* MOBILE NAVBAR */
+
+@media(max-width:900px){
+
+    .menu-btn{
+        display:block;
+        z-index:2000;
+    }
+
+    nav ul{
+
+        position:absolute;
+
+        top:100%;
+
+        right:0;
+
+        width:100%;
+
+        background:
+        rgba(5,5,5,.95);
+
+        backdrop-filter:blur(20px);
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:30px;
+
+        padding:35px 0;
+
+        border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+        display:none;
+
+    }
+
+    nav ul.active{
+        display:flex;
+    }
+
+    nav ul li a{
+        font-size:1.1rem;
+    }
+
+}
 /* ===========================
    HERO
 =========================== */
@@ -1039,13 +1102,21 @@ footer{
 
 <!-- NAVBAR -->
 
+<!-- NAVBAR -->
+
 <nav>
 
 <div class="logo">
 Portfolio Web
 </div>
 
-<ul>
+<!-- 3 BAR BUTTON -->
+
+<div class="menu-btn" id="menuBtn">
+    <i class="fa-solid fa-bars"></i>
+</div>
+
+<ul id="navLinks">
 
 <li><a href="#about">About</a></li>
 <li><a href="#works">Works</a></li>
@@ -1594,6 +1665,22 @@ likeBtn.addEventListener("click",()=>{
         likeBtn.classList.add("liked");
 
     }
+
+});
+
+/* ===========================
+   MOBILE MENU
+=========================== */
+
+const menuBtn =
+document.getElementById("menuBtn");
+
+const navLinks =
+document.getElementById("navLinks");
+
+menuBtn.addEventListener("click",()=>{
+
+    navLinks.classList.toggle("active");
 
 });
 
